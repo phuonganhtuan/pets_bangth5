@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.pets.adapter.ViewPagerAdapter;
 //import androidx.viewpager.widget.ViewPager;
 //import com.google.android.material.tabs.TabLayout;
 

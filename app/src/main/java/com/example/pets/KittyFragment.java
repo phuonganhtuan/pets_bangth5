@@ -1,5 +1,6 @@
 package com.example.pets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pets.adapter.KittyAdapter;
+import com.example.pets.api.APIServiceIml;
+import com.example.pets.api.ApiService;
+import com.example.pets.listener.FectDataCallBack;
 import com.example.pets.model.Kitty;
 
 import java.util.ArrayList;
@@ -52,6 +57,7 @@ public class KittyFragment extends Fragment {
     }
 
     private RecyclerView rcvKitty;
+    private List<Kitty> kitties;
     private KittyAdapter mKittyAdapter;
 
     @Override
@@ -62,38 +68,35 @@ public class KittyFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        //onCreat or onCreatView
-//        rcvKitty = getActivity().findViewById(R.id.rcv_kitty);
-//        mKittyAdapter = new KittyAdapter(getActivity());
-//
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-//        rcvKitty.setLayoutManager(gridLayoutManager);
-//
-//        mKittyAdapter.setData(getListKitty());
-//        rcvKitty.setAdapter(mKittyAdapter);
+
     }
 
-    private List<Kitty> getListKitty() {
-        List<Kitty> list = new ArrayList<>();
+    private void getListKitty(int page) {// truyền 1 tham số page vào để hàm có thể gọi list ở bất kỳ đoạn nào của list đó
+        isLoading = true;//lm
         // dữ liệu thực tế từ api sẽ get tại đây qua mKittyAdapter
-        list.add(new Kitty(R.drawable.anh1, "1", "meo meo 1","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh2, "1", "meo meo 2","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh3, "1", "meo meo 3","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh4, "1", "meo meo 4","","","","","", ""));
+        APIServiceIml.getAllKitties(page, new FectDataCallBack() {
+            @Override
+            public void onFetchSuccess(ArrayList<Kitty> list) {
+                isLoading = false;//lm
+                kitties.clear();
+                kitties.addAll(list);
+                if (list.size() < 10) { //lm
+                    isLastPage = true;//lm
+                }
+                mKittyAdapter.setData(kitties);
+            }
 
-        list.add(new Kitty(R.drawable.anh1, "1", "meo meo 1","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh2, "1", "meo meo 2","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh3, "1", "meo meo 3","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh4, "1", "meo meo 4","","","","","", ""));
-
-        list.add(new Kitty(R.drawable.anh1, "1", "meo meo 1","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh2, "1", "meo meo 2","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh3, "1", "meo meo 3","","","","","", ""));
-        list.add(new Kitty(R.drawable.anh4, "1", "meo meo 4","","","","","", ""));
-
-        return list;
+            @Override
+            public void onFetchFault(Exception e) {
+                isLoading = false;
+            }
+        });
 
     }
+
+    private int page = 1;//lm
+    private boolean isLoading = false;//lm
+    private boolean isLastPage = false;//lm
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,10 +110,32 @@ public class KittyFragment extends Fragment {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rcvKitty.setLayoutManager(gridLayoutManager);
-
-        mKittyAdapter.setData(getListKitty());
+        kitties = new ArrayList<>();
+        mKittyAdapter.setData(kitties);
         rcvKitty.setAdapter(mKittyAdapter);
 
+        page = 1;//lm
+        isLastPage = false;//lm
+        getListKitty(page);//lm
+
+        //
+        rcvKitty.setOnScrollListener(new PagingnationScrollListener(gridLayoutManager) {
+            @Override
+            public void loadMoreItem() {
+                page = page + 1;//lm
+                getListKitty(page);//lm
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;

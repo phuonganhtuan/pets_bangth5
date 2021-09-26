@@ -1,4 +1,4 @@
-package com.example.pets;
+package com.example.pets.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,7 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.pets.MainActivity;
+import com.example.pets.R;
 import com.example.pets.model.Kitty;
+import com.example.pets.model.Photo;
 
 import java.util.List;
 
@@ -46,6 +50,10 @@ public class KittyAdapter extends RecyclerView.Adapter<KittyAdapter.KittyViewHol
 
         kittyViewHolder.imgKiity.setImageResource(kitty.getResourceImage());
         kittyViewHolder.tvKitty.setText(kitty.getName());
+
+        Glide.with(kittyViewHolder.itemView.getContext())
+                .load(kitty.getImage().getUrl())
+                .into(kittyViewHolder.imgKiity);
     }
 
     @Override
