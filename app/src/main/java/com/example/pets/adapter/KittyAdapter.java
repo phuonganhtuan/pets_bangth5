@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.pets.KittyDetailFragment;
 import com.example.pets.MainActivity;
 import com.example.pets.R;
+import com.example.pets.listener.ItemClickListener;
 import com.example.pets.model.Kitty;
 import com.example.pets.model.Photo;
 
@@ -54,6 +57,20 @@ public class KittyAdapter extends RecyclerView.Adapter<KittyAdapter.KittyViewHol
         Glide.with(kittyViewHolder.itemView.getContext())
                 .load(kitty.getImage().getUrl())
                 .into(kittyViewHolder.imgKiity);
+
+        kittyViewHolder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                    Toast.makeText(mContext, " "+mListKitty.get(position), Toast.LENGTH_SHORT).show();
+                    //
+//                KittyDetailFragment nextFrag= new KittyDetailFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.layout_container, nextFrag, "findThisFragment")
+//                        .addToBackStack(null)
+//                        .commit();
+
+            }
+        });
     }
 
     @Override
@@ -64,16 +81,35 @@ public class KittyAdapter extends RecyclerView.Adapter<KittyAdapter.KittyViewHol
         return 0;
     }
 
-    public class KittyViewHolder extends RecyclerView.ViewHolder {
+    public class KittyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView imgKiity;
         private TextView tvKitty;
+
+        public TextView txt_name;
+        public TextView txt_weight;
+        public TextView txt_lifespan;
+        public TextView txt_temperament;
+        public TextView txt_description;
+        public ImageView img_description;
+        private ItemClickListener itemClickListener;
 
         public KittyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgKiity = itemView.findViewById(R.id.img_kitty);
             tvKitty = itemView.findViewById(R.id.tv_kitty);
+
+            itemView.setOnClickListener(this);
+        }
+        public void setItemClickListener(ItemClickListener itemClickListener)
+        {
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v,getAdapterPosition(),false);
         }
     }
 }

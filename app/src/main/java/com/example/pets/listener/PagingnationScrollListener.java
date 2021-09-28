@@ -1,4 +1,4 @@
-package com.example.pets;
+package com.example.pets.listener;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;

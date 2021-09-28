@@ -1,6 +1,5 @@
 package com.example.pets;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,9 +10,10 @@ import android.view.ViewGroup;
 
 import com.example.pets.adapter.KittyAdapter;
 import com.example.pets.api.APIServiceIml;
-import com.example.pets.api.ApiService;
 import com.example.pets.listener.FectDataCallBack;
+import com.example.pets.listener.PagingnationScrollListener;
 import com.example.pets.model.Kitty;
+import com.example.pets.utils.DarkModeInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
  * Use the {@link KittyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class KittyFragment extends Fragment {
+public class KittyFragment extends Fragment implements DarkModeInterface {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -143,4 +143,13 @@ public class KittyFragment extends Fragment {
     }
 
 
+    @Override
+    public void enableDarkMode() {
+
+    }
+
+    @Override
+    public void disableDarkMode() {
+
+    }
 }
