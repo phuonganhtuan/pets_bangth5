@@ -1,7 +1,9 @@
 package com.example.pets.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +26,11 @@ public class KittyAdapter extends RecyclerView.Adapter<KittyAdapter.KittyViewHol
 
     private Context mContext;
     private List<Kitty> mListKitty;
+    private ItemClickListener mItemClickListener;
 
-    public KittyAdapter(Context mContext) {
+    public KittyAdapter(Context mContext, ItemClickListener mItemClickListener) {
         this.mContext = mContext;
+        this.mItemClickListener = mItemClickListener;
     }
 
     public void setData (List<Kitty> list){
@@ -58,19 +62,20 @@ public class KittyAdapter extends RecyclerView.Adapter<KittyAdapter.KittyViewHol
                 .load(kitty.getImage().getUrl())
                 .into(kittyViewHolder.imgKiity);
 
-        kittyViewHolder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                    Toast.makeText(mContext, " "+mListKitty.get(position), Toast.LENGTH_SHORT).show();
-                    //
+//        kittyViewHolder.setItemClickListener(new ItemClickListener() {
+//            @Override
+//            public void onClick(View view, int position, boolean isLongClick) {
+//                    Toast.makeText(mContext, " "+mListKitty.get(position), Toast.LENGTH_SHORT).show();
+//                    //
 //                KittyDetailFragment nextFrag= new KittyDetailFragment();
-//                getActivity().getSupportFragmentManager().beginTransaction()
+//                ((FragmentActivity)view.getContext()).getSupportFragmentManager().beginTransaction()
 //                        .replace(R.id.layout_container, nextFrag, "findThisFragment")
 //                        .addToBackStack(null)
 //                        .commit();
-
-            }
-        });
+//
+//            }
+//        });
+        kittyViewHolder.setItemClickListener(this.mItemClickListener);
     }
 
     @Override
@@ -101,6 +106,10 @@ public class KittyAdapter extends RecyclerView.Adapter<KittyAdapter.KittyViewHol
             tvKitty = itemView.findViewById(R.id.tv_kitty);
 
             itemView.setOnClickListener(this);
+
+            int position = 0;
+            Kitty kitty = null;
+            renderData(kitty, position);
         }
         public void setItemClickListener(ItemClickListener itemClickListener)
         {
@@ -110,6 +119,10 @@ public class KittyAdapter extends RecyclerView.Adapter<KittyAdapter.KittyViewHol
         @Override
         public void onClick(View v) {
             itemClickListener.onClick(v,getAdapterPosition(),false);
+        }
+
+        public void renderData (Kitty kitty, int position){
+
         }
     }
 }

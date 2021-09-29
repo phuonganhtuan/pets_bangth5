@@ -1,16 +1,20 @@
 package com.example.pets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.pets.adapter.KittyAdapter;
 import com.example.pets.api.APIServiceIml;
 import com.example.pets.listener.FectDataCallBack;
+import com.example.pets.listener.ItemClickListener;
 import com.example.pets.listener.PagingnationScrollListener;
 import com.example.pets.model.Kitty;
 import com.example.pets.utils.DarkModeInterface;
@@ -106,7 +110,23 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
 
         //onCreat or onCreatView
         rcvKitty = view.findViewById(R.id.rcv_kitty);
-        mKittyAdapter = new KittyAdapter(getActivity());
+        mKittyAdapter = new KittyAdapter(getActivity(), new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+
+//                KittyDetailFragment nextFrag= new KittyDetailFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.frg_kitty, nextFrag, "findThisFragment")
+//                        .addToBackStack(null)
+//                        .commit();
+                Intent intent = new Intent(getActivity(), KittyDetailFragment.class);
+
+//                intent.putExtra("id", id);                 // Truyền một id
+
+                getContext().startActivity(intent);
+
+            }
+        });
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rcvKitty.setLayoutManager(gridLayoutManager);
@@ -152,4 +172,13 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
     public void disableDarkMode() {
 
     }
+//
+//    @Override
+//    public void onClick(View view, int position, boolean isLongClick) {
+//        KittyDetailFragment nextFrag= new KittyDetailFragment();
+//        ((FragmentActivity)view.getContext()).getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.layout_container, nextFrag, "findThisFragment")
+//                .addToBackStack(null)
+//                .commit();
+//    }
 }
