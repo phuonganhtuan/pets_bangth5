@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -114,16 +116,18 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
 
-//                KittyDetailFragment nextFrag= new KittyDetailFragment();
+                loadFragment(new KittyDetail3Fragment());
+
+//                KittyDetail3Fragment nextFrag= new KittyDetail3Fragment();
 //                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.frg_kitty, nextFrag, "findThisFragment")
+//                        .replace(R.id.container_detail, nextFrag, "findThisFragment")
 //                        .addToBackStack(null)
 //                        .commit();
-                Intent intent = new Intent(getActivity(), KittyDetailFragment.class);
-
-//                intent.putExtra("id", id);                 // Truyền một id
-
-                getContext().startActivity(intent);
+//                Intent intent = new Intent(getActivity(), KittyDetailFragment.class);
+//
+////                intent.putExtra("id", id);                 // Truyền một id
+//
+//                getContext().startActivity(intent);
 
             }
         });
@@ -160,6 +164,13 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
         // Inflate the layout for this fragment
         return view;
 
+    }
+
+    private void loadFragment(KittyDetail3Fragment kittyDetail3Fragment) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.container_detail, kittyDetail3Fragment);
+        fragmentTransaction.commit(); // lưu lại các thay đổi fragment
     }
 
 
