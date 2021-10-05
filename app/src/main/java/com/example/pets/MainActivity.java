@@ -89,6 +89,16 @@ public class MainActivity extends AppCompatActivity implements DarkModeInterface
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            button.setBackground(getDrawable(R.drawable.background_dark));
 //        }
+
+//        button.setBackground(getResources().getDrawable(R.drawable.background_dark));
+
+        final int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_dark));
+        } else {
+            button.setBackground(getResources().getDrawable(R.drawable.background_dark));
+        }
+
     }
 
     @Override
@@ -96,5 +106,15 @@ public class MainActivity extends AppCompatActivity implements DarkModeInterface
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            button.setBackground(getDrawable(R.drawable.background_default));
 //        }
+
+//        button.setBackground(getResources().getDrawable(R.drawable.background_default));
+
+        final int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_default));
+        } else {
+            button.setBackground(getResources().getDrawable(R.drawable.background_default));
+        }
+
     }
 }

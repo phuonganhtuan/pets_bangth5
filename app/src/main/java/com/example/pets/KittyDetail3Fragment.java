@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pets.model.Kitty;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link KittyDetail3Fragment#newInstance} factory method to
@@ -35,11 +37,12 @@ public class KittyDetail3Fragment extends Fragment {
      * @return A new instance of fragment KittyDetail3Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static KittyDetail3Fragment newInstance(String param1, String param2) {
+    public static KittyDetail3Fragment newInstance(Kitty kitty) {
         KittyDetail3Fragment fragment = new KittyDetail3Fragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, String.valueOf(kitty));
+        args.putSerializable("Kitty" , kitty);
         fragment.setArguments(args);
         return fragment;
     }

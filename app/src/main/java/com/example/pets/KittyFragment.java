@@ -1,5 +1,6 @@
 package com.example.pets;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.example.pets.adapter.KittyAdapter;
 import com.example.pets.api.APIServiceIml;
 import com.example.pets.listener.FectDataCallBack;
 import com.example.pets.listener.ItemClickListener;
+import com.example.pets.listener.ItemDAO;
 import com.example.pets.listener.PagingnationScrollListener;
 import com.example.pets.model.Kitty;
 import com.example.pets.utils.DarkModeInterface;
@@ -109,6 +111,19 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_kitty, container, false);
+
+        AppDatabase database = Room.databaseBuilder(getContext(), AppDatabase.class, "mydb")
+                .allowMainThreadQueries() // chạy luôn trên luồng chính do đang còn đơn giản, chuưa cần AsynTask
+                .build();
+        ItemDAO itemDAO = database.getItemDAO();
+        Item item = new Item("","","","");
+        item.setName("Item001");
+        item.setDescription("Item 001");
+        item.setLike("Like");
+
+        itemDAO.insert(item);
+        List<Item> items = itemDAO.getItems();
+        System.out.println(items);
 
         //onCreat or onCreatView
         rcvKitty = view.findViewById(R.id.rcv_kitty);

@@ -1,15 +1,21 @@
 package com.example.pets.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Kitty {
+@Entity(tableName = "items")
+public class Kitty implements Serializable {
 
+    @PrimaryKey
     private int resourceImage;///
     private String id;
     private String name;
