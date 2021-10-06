@@ -13,12 +13,19 @@
         android:layout_height="match_parent"
         android:textColor="@color/cardview_light_background"
         android:text="@string/kitty_fragment" />
+    <Button
+        android:id="@+id/btn_list_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Danh sách yêu thích"
+        android:textColor="#FA8072"
+        android:layout_marginTop="20dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv_kitty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp" />
 

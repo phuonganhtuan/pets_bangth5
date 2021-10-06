@@ -5,7 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Update;
 
-import com.example.pets.Item;
+import com.example.pets.model.ItemKittyLiked;
 import com.example.pets.model.Kitty;
 
 import android.arch.persistence.room.Query;
@@ -14,15 +14,15 @@ import java.util.List;
 @Dao
 public interface ItemDAO {
     @Insert
-    public void insert(Kitty... items);
+    public void insert(ItemKittyLiked... items);
     @Update
-    public void update(Kitty... items);
+    public void update(ItemKittyLiked... items);
     @Delete
-    public void delete(Kitty item);
+    public void delete(ItemKittyLiked item);
 
     @Query("SELECT * FROM items")
-    public List<Kitty> getItems();
+    public List<ItemKittyLiked> getItems();
 
     @Query("SELECT * FROM items WHERE id = :id")
-    public Kitty getItemById(String id);
+    public ItemKittyLiked getItemById(String id);
 }

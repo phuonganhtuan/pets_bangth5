@@ -12,10 +12,10 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@Entity(tableName = "items")
+//@Entity(tableName = "items")
 public class Kitty implements Serializable {
 
-    @PrimaryKey
+//    @PrimaryKey
     private int resourceImage;///
     private String id;
     private String name;

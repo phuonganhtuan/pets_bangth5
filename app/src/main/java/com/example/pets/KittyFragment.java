@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.pets.adapter.KittyAdapter;
@@ -20,6 +21,7 @@ import com.example.pets.listener.FectDataCallBack;
 import com.example.pets.listener.ItemClickListener;
 import com.example.pets.listener.ItemDAO;
 import com.example.pets.listener.PagingnationScrollListener;
+import com.example.pets.model.ItemKittyLiked;
 import com.example.pets.model.Kitty;
 import com.example.pets.utils.DarkModeInterface;
 
@@ -67,6 +69,7 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
     private RecyclerView rcvKitty;
     private List<Kitty> kitties;
     private KittyAdapter mKittyAdapter;
+    private Button btnListFavorite;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,18 +115,30 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
 
         View view = inflater.inflate(R.layout.fragment_kitty, container, false);
 
+        /*
+
         AppDatabase database = Room.databaseBuilder(getContext(), AppDatabase.class, "mydb")
                 .allowMainThreadQueries() // chạy luôn trên luồng chính do đang còn đơn giản, chuưa cần AsynTask
                 .build();
         ItemDAO itemDAO = database.getItemDAO();
-        Kitty item = new Kitty(0,"","","", "", "", "", "","", 0, 0, 0,0, 0, 0, 0, 0);
+        ItemKittyLiked item = new ItemKittyLiked("");
         item.setId("Item001");
 //        item.setDescription("Item 001");
 //        item.setLike("Like");
 
         itemDAO.insert(item);
-        List<Kitty> items = itemDAO.getItems();
+        List<ItemKittyLiked> items = itemDAO.getItems();
         System.out.println(items);
+
+         */
+
+        btnListFavorite = view.findViewById(R.id.btn_list_favorite);
+        btnListFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open fragment list favorite
+            }
+        });
 
         //onCreat or onCreatView
         rcvKitty = view.findViewById(R.id.rcv_kitty);

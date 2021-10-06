@@ -1,12 +1,17 @@
 package com.example.pets;
 
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pets.listener.ItemDAO;
+import com.example.pets.model.ItemKittyLiked;
 import com.example.pets.model.Kitty;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,8 +37,8 @@ public class KittyDetail3Fragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
      * @return A new instance of fragment KittyDetail3Fragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -59,7 +64,21 @@ public class KittyDetail3Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_kitty_detail3, container, false);
+
+        AppDatabase database = Room.databaseBuilder(getContext(), AppDatabase.class, "mydb")
+                .allowMainThreadQueries() // chạy luôn trên luồng chính do đang còn đơn giản, chưa cần AsynTask
+                .build();
+        //
+        ItemDAO itemDAO = database.getItemDAO();
+        ItemKittyLiked item = new ItemKittyLiked("");
+        item.setId("Item001");
+
+        itemDAO.insert(item);
+        List<ItemKittyLiked> items = itemDAO.getItems();
+        System.out.println(items);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kitty_detail3, container, false);
+        return view;
     }
 }
