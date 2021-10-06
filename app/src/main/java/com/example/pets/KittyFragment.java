@@ -116,13 +116,13 @@ public class KittyFragment extends Fragment implements DarkModeInterface {
                 .allowMainThreadQueries() // chạy luôn trên luồng chính do đang còn đơn giản, chuưa cần AsynTask
                 .build();
         ItemDAO itemDAO = database.getItemDAO();
-        Item item = new Item("","","","");
-        item.setName("Item001");
-        item.setDescription("Item 001");
-        item.setLike("Like");
+        Kitty item = new Kitty(0,"","","", "", "", "", "","", 0, 0, 0,0, 0, 0, 0, 0);
+        item.setId("Item001");
+//        item.setDescription("Item 001");
+//        item.setLike("Like");
 
         itemDAO.insert(item);
-        List<Item> items = itemDAO.getItems();
+        List<Kitty> items = itemDAO.getItems();
         System.out.println(items);
 
         //onCreat or onCreatView

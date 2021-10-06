@@ -24,5 +24,5 @@ public interface ItemDAO {
     public List<Kitty> getItems();
 
     @Query("SELECT * FROM items WHERE id = :id")
-    public Item getItemById(String id);
+    public Kitty getItemById(String id);
 }
